@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/invoices";
+const API_URL = "https://invoice-management-system-api-z5lx.onrender.com/api/invoices";
+
 
 // Add Invoice
 document.getElementById("invoiceForm").addEventListener("submit", async function (e) {
@@ -14,20 +15,28 @@ document.getElementById("invoiceForm").addEventListener("submit", async function
     try {
 
         const response = await fetch(API_URL, {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
+
                 invoice_number,
                 customer_name,
                 invoice_date,
                 total_amount,
                 status
+
             })
+
         });
 
+
         const data = await response.json();
+
 
         if (data.success) {
 
@@ -39,18 +48,21 @@ document.getElementById("invoiceForm").addEventListener("submit", async function
 
         } else {
 
-            alert(data.message);
+            alert(data.message || "Failed to add invoice");
 
         }
+
 
     } catch (error) {
 
         console.log(error);
+
         alert("Server Connection Failed");
 
     }
 
 });
+
 
 
 // Load Invoices
@@ -63,24 +75,38 @@ async function loadInvoices() {
 
         const invoices = await response.json();
 
+
         const table = document.getElementById("invoiceTable");
 
         table.innerHTML = "";
 
+
         invoices.forEach(invoice => {
 
+
             table.innerHTML += `
+
                 <tr>
+
                     <td>${invoice.id}</td>
+
                     <td>${invoice.invoice_number}</td>
+
                     <td>${invoice.customer_name}</td>
+
                     <td>${invoice.invoice_date}</td>
+
                     <td>₹${invoice.total_amount}</td>
+
                     <td>${invoice.status}</td>
+
                 </tr>
+
             `;
 
+
         });
+
 
     } catch (error) {
 
@@ -89,6 +115,8 @@ async function loadInvoices() {
     }
 
 }
+
+
 
 // Load when page opens
 loadInvoices();
