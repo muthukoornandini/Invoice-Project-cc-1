@@ -1,4 +1,7 @@
 
+const API_URL = "https://invoice-management-system-api-z5lx.onrender.com/api/customers";
+
+
 document.getElementById("customerForm").addEventListener("submit", async function(event) {
 
     event.preventDefault();
@@ -10,7 +13,7 @@ document.getElementById("customerForm").addEventListener("submit", async functio
 
     try {
 
-        const response = await fetch("http://localhost:5000/api/customers", {
+        const response = await fetch(API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,7 +53,7 @@ async function loadCustomers() {
 
     try {
 
-        const response = await fetch("http://localhost:5000/api/customers");
+        const response = await fetch(API_URL);
 
         const customers = await response.json();
 
